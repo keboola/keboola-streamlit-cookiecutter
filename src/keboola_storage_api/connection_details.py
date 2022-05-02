@@ -29,6 +29,7 @@ def connection_details():
                         st.sidebar.success('Connected to Keboola Storage')
                 except Exception as e:
                     st.sidebar.error('Could not connect to Keboola Storage')
+                    st.error(e)
                     
 
             return st.session_state['connection_url'], st.session_state['api_token'], st.session_state['client']

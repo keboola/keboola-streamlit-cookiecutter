@@ -1,13 +1,15 @@
 import streamlit as st
+import datetime as dt
+from prophet import Prophet
+import pandas as pd
 
-with st.expander("Forecasting Area"):
+def forecast():
+    query_df = pd.read_csv(st.session_state['uploaded_file'] )
     st.header('**Forecasting**')
     with st.container():
         ds_selection = st.selectbox("Select a date column", query_df.columns)
-
         # create 3 containers for the forecasting area
         container1_col1, container1_col2, container1_col3 = st.columns(3)
-
         # Container 1: select the frequency
         with container1_col1:
             freq = st.selectbox(
@@ -20,7 +22,6 @@ with st.expander("Forecasting Area"):
         with container1_col3:
             seasonality = st.selectbox(
                 "Seasonality Mode", ("additive", "multiplicative"))
-
     with st.container():
         container2_col1, container2_col2 = st.columns(2)
         with container2_col1:
@@ -29,17 +30,14 @@ with st.expander("Forecasting Area"):
         with container2_col2:
             changepoint_range = st.slider(
                 "changepoint_range", 0.01, 0.99, 0.05)
-
     if freq == "Monthly":
         freq = "MS"
     elif freq == "Weekly":
         freq = "W"
     else:
         freq = "D"
-
     y = st.selectbox(
         "Select a target column (it must be numeric)", query_df.columns, index=1)
-
     if st.button("Forecast"):
         with st.spinner('Forecasting...'):
             ds = query_df[ds_selection]
@@ -70,7 +68,6 @@ with st.expander("Forecasting Area"):
             st.write('---')
             st.header('**Forecast Components**')
             st.write(fig2)
-
             forecasting_params = {
                 'y': y, 
                 'ds': ds,
@@ -86,3 +83,6 @@ with st.expander("Forecasting Area"):
                 for key, value in forecasting_params.items():
                     st.session_state[key] = value
             forecasting_parameters(forecasting_params)
+
+if __name__ == "__main__":
+    forecast()
