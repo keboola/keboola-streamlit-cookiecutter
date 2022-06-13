@@ -79,10 +79,7 @@ def forecast():
                 'changepoint_prior_scale': changepoint_prior_scale,
                 'changepoint_range': changepoint_range
             }
-            def forecasting_parameters(forecasting_params):
-                for key, value in forecasting_params.items():
-                    st.session_state[key] = value
-            forecasting_parameters(forecasting_params)
+
 
 if __name__ == "__main__":
     forecast()
