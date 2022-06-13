@@ -2,3 +2,12 @@ src/st_aggrid/__pycache__/st_aggrid.cpython-39.pyc
 src/keboola_storage_api/__pycache__/table_selection.cpython-39.pyc
 src/keboola_storage_api/__pycache__/connection_details.cpython-39.pyc
 src/fb_prophet_forecasting/__pycache__/st_prophet_forecast.cpython-39.pyc
+ga_ad_analytics
+ga_page_behaviour
+google-analytics-primary-report
+profiles
+pages/codex_query_generator/__pycache__/codex.cpython-39.pyc
+pages/fb_prophet_forecasting/__pycache__/st_prophet_forecast.cpython-39.pyc
+pages/keboola_storage_api/__pycache__/connection_details.cpython-39.pyc
+pages/keboola_storage_api/__pycache__/table_selection.cpython-39.pyc
+pages/st_aggrid/__pycache__/st_aggrid.cpython-39.pyc

@@ -2,10 +2,7 @@ import streamlit as st
 import pandas as pd
 from kbcstorage.client import Client
 
-
-
 def table_selection():
-
     with st.sidebar.header('Select a bucket from storage'):
         if ('client') not in st.session_state:
                 try:
@@ -13,7 +10,7 @@ def table_selection():
                 except Exception as e:
                     st.error('Please check your connection details')
                     st.error(e)
-        
+
         def callback():
             st.sidebar.success('Connected to Keboola Storage')
         
@@ -26,28 +23,33 @@ def table_selection():
             #    st.session_state.pop('bucket')
             #if ('table_names') in st.session_state:
             #    st.session_state.pop('table_names')
-            #if ('bucket_names') not in st.session_state:
-            try:
-                st.session_state.bucket_names = []
-            
-                for i in st.session_state['client'].buckets.list():
-                    st.session_state.bucket_names.append(i['name'])
-                
-            except Exception as e:
-                st.error('Could not list buckets')
-                st.error(e)
-            # Select a bucket from the list
-            st.session_state['bucket'] = st.sidebar.selectbox('Bucket', st.session_state.bucket_names, on_change=callback)
+            if ('bucket_names') not in st.session_state:
+                try:
+                    st.session_state.bucket_names = []
+
+                    for i in st.session_state['client'].buckets.list():
+                        st.session_state.bucket_names.append(i['name'])
+
+                except Exception as e:
+                    st.error('Could not list buckets')
+                    st.error(e)
+                # Select a bucket from the list
+            if st.session_state['bucket_names'] in st.session_state:
+                st.session_state['bucket'] = st.sidebar.selectbox('Bucket', st.session_state.bucket_names)
+            else: 
+                st.write('no bucket selected')
 
             # get the id of the selected bucket
-            for i in st.session_state['client'].buckets.list():
-                if i['name'] == st.session_state['bucket']:
-                    st.session_state['bucket_id'] = i['id']
-                
-            if ('bucket_id') in st.session_state:
-                return st.session_state['bucket_id']
+     
+
+            #if ('bucket_id') in st.session_state:
+            #   return st.session_state['bucket_id']
     
         st.session_state['bucket_id'] = get_buckets()
+        for i in st.session_state['client'].buckets.list():
+            if i['name'] == st.session_state['bucket']:
+                st.session_state['bucket_id'] = i['id']
+                
     
 
     # Get the list of tables from the selected bucket
@@ -67,18 +69,18 @@ def table_selection():
                     st.error(e)
             
             # Select a table from the list
-            st.session_state['table'] = st.sidebar.selectbox('Table', st.session_state.table_names, on_change=table_selection)
+            st.session_state['table'] = st.sidebar.selectbox('Table', st.session_state.table_names)
 
             # get the id of the selected table
             for i in st.session_state['client'].tables.list(st.session_state['bucket_id']):
                 if i['name'] == st.session_state['table']:
                     st.session_state['table_id'] = i['id']
                     break
-            if ('table_id') in st.session_state:
-                return st.session_state['table_id']
-            else:
-                st.error('Could not get table id')
+                    
+        return st.session_state['table_id']
+        
 
+        
         
         try:
             st.session_state['table_id'] = get_tables()
