@@ -2,7 +2,7 @@ import streamlit as st
 import datetime as dt
 from prophet import Prophet
 import pandas as pd
-@st.cache
+
 def forecast():
     query_df = pd.read_csv(st.session_state['uploaded_file'] )
     st.header('**Forecasting**')
@@ -79,11 +79,7 @@ def forecast():
                 'changepoint_prior_scale': changepoint_prior_scale,
                 'changepoint_range': changepoint_range
             }
-            @st.cache
-            def forecasting_parameters(forecasting_params):
-                for key, value in forecasting_params.items():
-                    st.session_state[key] = value
-            forecasting_parameters(forecasting_params)
+
 
 if __name__ == "__main__":
     forecast()
