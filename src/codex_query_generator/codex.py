@@ -2,7 +2,6 @@ import streamlit as st
 import os
 import openai
 
-
 def codex():
     st.write("Enter your query below and press the run button")
     codex_context = "--Snowflake SQL Query" + "\n" + "--Add quotation marks around table names and column names"

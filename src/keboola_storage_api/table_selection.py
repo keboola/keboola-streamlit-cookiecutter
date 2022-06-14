@@ -19,10 +19,10 @@ def table_selection():
             """ 
             This function is used to get the list of buckets from Keboola Storage.
             """
-            #if ('bucket') in st.session_state:
-            #    st.session_state.pop('bucket')
-            #if ('table_names') in st.session_state:
-            #    st.session_state.pop('table_names')
+            if ('bucket') in st.session_state:
+                st.session_state.pop('bucket')
+            if ('table_names') not in st.session_state:
+                st.session_state['table_names']= 'none'
             if ('bucket_names') not in st.session_state:
                 try:
                     st.session_state.bucket_names = []
@@ -35,55 +35,47 @@ def table_selection():
                     st.error(e)
                 # Select a bucket from the list
             if st.session_state['bucket_names'] in st.session_state:
-                st.session_state['bucket'] = st.sidebar.selectbox('Bucket', st.session_state.bucket_names)
+                st.session_state['bucket'] = st.sidebar.selectbox('Bucket', st.session_state.bucket_names, on_change=callback)
             else: 
                 st.write('no bucket selected')
 
             # get the id of the selected bucket
-     
-
-            #if ('bucket_id') in st.session_state:
-            #   return st.session_state['bucket_id']
-    
-        st.session_state['bucket_id'] = get_buckets()
-        for i in st.session_state['client'].buckets.list():
-            if i['name'] == st.session_state['bucket']:
-                st.session_state['bucket_id'] = i['id']
+            
+            for i in st.session_state['client'].buckets.list():
+                if i['name'] == st.session_state['bucket']:
+                    bucket_id = i['id']
                 
-    
+            return bucket_id
+
+    bucket_id = get_buckets()
 
     # Get the list of tables from the selected bucket
     with st.sidebar.header('Select a table from the bucket'):
                         # Select a table from the bucket
-        def get_tables():
+        @st.experimental_memo()
+        def get_tables(bucket_id):
             """
             This function is used to get the list of tables from the selected bucket.
             """
-            if ('bucket_id') in st.session_state:
-                st.session_state.table_names = []
-                try:
-                    for i in st.session_state['client'].buckets.list_tables(st.session_state['bucket_id']):
-                        st.session_state.table_names.append(i['name'])
-                except Exception as e:
-                    st.error('Could not list tables')
-                    st.error(e)
-            
+            table_names = []
+            try:
+                for i in st.session_state['client'].buckets.list_tables(bucket_id):
+                    table_names.append(i['name'])
+            except Exception as e:
+                st.error('Could not list tables')
+                st.error(e)
+        
             # Select a table from the list
-            st.session_state['table'] = st.sidebar.selectbox('Table', st.session_state.table_names)
+            st.session_state['table'] = st.sidebar.selectbox('Table', table_names)
 
             # get the id of the selected table
-            for i in st.session_state['client'].tables.list(st.session_state['bucket_id']):
+            for i in st.session_state['client'].tables.list(bucket_id):
                 if i['name'] == st.session_state['table']:
                     st.session_state['table_id'] = i['id']
-                    break
                     
-        return st.session_state['table_id']
-        
-
-        
         
         try:
-            st.session_state['table_id'] = get_tables()
+            st.session_state['table_id'] = get_tables(bucket_id)
             st.session_state['uploaded_file'] = st.session_state['client'].tables.export_to_file(table_id=st.session_state['table_id'], path_name='.')
         except Exception as e:
             st.error('Could not get the table')
