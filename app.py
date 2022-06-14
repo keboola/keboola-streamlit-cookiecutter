@@ -4,7 +4,7 @@ from src.keboola_storage_api import table_selection as kbc_table_selection
 from src.keboola_storage_api import table_selection_simple as kbc_table_selection_simple
 from src.st_aggrid import st_aggrid
 from src.fb_prophet_forecasting import st_prophet_forecast
-from src.codex_query_generator import codex
+#from src.codex_query_generator import codex
 
 st.image('static/keboola_logo.png', width=400)
 
