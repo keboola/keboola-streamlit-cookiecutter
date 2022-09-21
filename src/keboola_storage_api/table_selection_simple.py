@@ -45,7 +45,7 @@ def table_selection():
     # Get the list of tables from the selected bucket
     with st.sidebar.header('Select a table from the bucket'):
                         # Select a table from the bucket
-        # @st.experimental_memo(suppress_st_warning=True)
+        @st.experimental_memo(suppress_st_warning=True)
         def get_tables(bucket_id):
             """
             This function is used to get the list of tables from the selected bucket.
