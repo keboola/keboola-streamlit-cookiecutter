@@ -45,7 +45,7 @@ def table_selection():
     # Get the list of tables from the selected bucket
     with st.sidebar.header('Select a table from the bucket'):
                         # Select a table from the bucket
-        @st.experimental_memo(suppress_st_warning=True)
+        # @st.experimental_memo(suppress_st_warning=True)
         def get_tables(bucket_id):
             """
             This function is used to get the list of tables from the selected bucket.
@@ -59,11 +59,11 @@ def table_selection():
                 st.error(e)
         
             # Select a table from the list
-            st.session_state['table'] = st.sidebar.selectbox('Table', table_names)
+            table = st.sidebar.selectbox('table', table_names, on_change=callback)
 
             # get the id of the selected table
             for i in st.session_state['client'].tables.list(bucket_id):
-                if i['name'] == st.session_state['table']:
+                if i['name'] == table:
                     table_id = i['id']
             return table_id     
         
