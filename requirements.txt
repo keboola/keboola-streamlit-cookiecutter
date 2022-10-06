@@ -2,7 +2,12 @@ streamlit
 pandas
 git+https://github.com/keboola/sapi-python-client.git
 streamlit-aggrid
+<<<<<<< HEAD
 snowflake-connector-python==2.7.9
 snowflake-sqlalchemy
 prophet
 openai
+=======
+prophet
+
+>>>>>>> b6efcdf76e45223210b663a919d6821a0e4f2a89

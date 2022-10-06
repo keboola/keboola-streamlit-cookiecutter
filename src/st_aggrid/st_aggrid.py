@@ -26,6 +26,10 @@ def interactive_table():
             df,
             enable_enterprise_modules=True,
             gridOptions=options.build(),
+<<<<<<< HEAD
+=======
+            theme="streamlit",
+>>>>>>> b6efcdf76e45223210b663a919d6821a0e4f2a89
             height=800,
             update_mode=GridUpdateMode.MODEL_CHANGED,
             allow_unsafe_jscode=True,
