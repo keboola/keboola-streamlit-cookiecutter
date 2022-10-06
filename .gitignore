@@ -20,3 +20,13 @@ orders-radim-test
 post-tags
 .gitignore
 src/keboola_storage_api/__pycache__/table_selection_simple.cpython-39.pyc
+accounts
+.gitignore
+fake-orders
+src/fb_prophet_forecasting/__pycache__/st_prophet_forecast.cpython-310.pyc
+src/keboola_storage_api/__pycache__/connection_details.cpython-310.pyc
+src/keboola_storage_api/__pycache__/table_selection_simple.cpython-310.pyc
+src/keboola_storage_api/__pycache__/table_selection.cpython-310.pyc
+src/st_aggrid/__pycache__/st_aggrid.cpython-310.pyc
+src/workspace_connection/__pycache__/workspace_connection.cpython-310.pyc
+analytics-data

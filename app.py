@@ -3,8 +3,10 @@ from src.keboola_storage_api import connection_details as kbc_connection_details
 from src.keboola_storage_api import table_selection as kbc_table_selection
 from src.keboola_storage_api import table_selection_simple as kbc_table_selection_simple
 from src.st_aggrid import st_aggrid
-#from src.fb_prophet_forecasting import st_prophet_forecast
-#from src.codex_query_generator import codex
+from src.workspace_connection import workspace_connection as ws_connection
+from src.fb_prophet_forecasting import st_prophet_forecast
+import pandas as pd
+from src.codex_query_generator import codex
 
 st.image('static/keboola_logo.png', width=400)
 
@@ -16,12 +18,13 @@ st.markdown('''
 ---
 ''')
 
-
+#ws_connection.connect_to_snowflake()
 
 kbc_connection_details.connection_details()
 
 kbc_table_selection_simple.table_selection()
 
+query_df = pd.read_csv(st.session_state['uploaded_file'])
 #uncomment the following lines to enable the interactive table app
 
 st.subheader('Interactive Table')
@@ -38,7 +41,7 @@ st.markdown('''
 This app allows you to generate forecasts using the Prophet library.
 ---
 ''')
-st_prophet_forecast.forecast()
+st_prophet_forecast.forecast(query_df)
 
 
 if st.button('Generate Queries'):

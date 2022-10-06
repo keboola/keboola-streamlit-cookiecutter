@@ -26,7 +26,6 @@ def interactive_table():
             df,
             enable_enterprise_modules=True,
             gridOptions=options.build(),
-            theme="dark",
             height=800,
             update_mode=GridUpdateMode.MODEL_CHANGED,
             allow_unsafe_jscode=True,

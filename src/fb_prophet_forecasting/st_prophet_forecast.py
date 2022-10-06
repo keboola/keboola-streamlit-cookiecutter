@@ -3,8 +3,8 @@ import datetime as dt
 from prophet import Prophet
 import pandas as pd
 
-def forecast():
-    query_df = pd.read_csv(st.session_state['uploaded_file'] )
+def forecast(query_df):
+    #query_df = pd.read_csv(st.session_state['uploaded_file'])
     st.header('**Forecasting**')
     with st.container():
         ds_selection = st.selectbox("Select a date column", query_df.columns)
@@ -41,7 +41,7 @@ def forecast():
     if st.button("Forecast"):
         with st.spinner('Forecasting...'):
             ds = query_df[ds_selection]
-            # group ds by index and sum
+            #group ds by index and sum
             #ds = ds.groupby(ds.index).sum()
             y = query_df[y]
             # cast y to int
