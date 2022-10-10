@@ -40,14 +40,18 @@ def forecast(query_df):
         "Select a target column (it must be numeric)", query_df.columns, index=1)
     if st.button("Forecast"):
         with st.spinner('Forecasting...'):
-            ds = query_df[ds_selection]
-            #group ds by index and sum
-            #ds = ds.groupby(ds.index).sum()
-            y = query_df[y]
+            #query_df.set_index(ds_selection, inplace=True)
+            #query_df.index = pd.to_datetime(query_df.index)
+            #query_df = query_df.resample(freq).sum()
             # cast y to int
-            y = y.astype(int)
+            #y = y.astype(int)
+            ds = query_df[ds_selection]
+            #ds = pd.to_datetime(ds)
+            y = query_df[y]
+            #group ds by index and sum
+            #ds = ds.groupby(ds.index).sum(y)
             df = pd.DataFrame({'ds': ds, 'y': y})
-            df = df.groupby('ds').agg('sum')
+            #df = df.groupby('ds').agg('sum')
             df = df.reset_index()
             st.write(df)
             today = dt.datetime.today()

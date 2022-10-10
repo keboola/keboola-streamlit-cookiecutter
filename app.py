@@ -1,17 +1,11 @@
 import streamlit as st
-from src.keboola_storage_api import connection_details as kbc_connection_details
-from src.keboola_storage_api import table_selection as kbc_table_selection
-from src.keboola_storage_api import table_selection_simple as kbc_table_selection_simple
+from src.keboola_storage_api.connection import add_keboola_table_selection
+#from src.keboola_storage_api.upload import main as upload_to_keboola
 from src.st_aggrid import st_aggrid
-<<<<<<< HEAD
 from src.workspace_connection import workspace_connection as ws_connection
 from src.fb_prophet_forecasting import st_prophet_forecast
 import pandas as pd
-from src.codex_query_generator import codex
-=======
-from src.fb_prophet_forecasting import st_prophet_forecast
 #from src.codex_query_generator import codex
->>>>>>> b6efcdf76e45223210b663a919d6821a0e4f2a89
 
 st.image('static/keboola_logo.png', width=400)
 
@@ -25,30 +19,27 @@ st.markdown('''
 
 #ws_connection.connect_to_snowflake()
 
-kbc_connection_details.connection_details()
+# Adds a table selection form to the sidebar of streamlit
+add_keboola_table_selection()
 
-kbc_table_selection_simple.table_selection()
+if "uploaded_file" in st.session_state:
+    query_df = pd.read_csv(st.session_state['uploaded_file'])
+    #uncomment the following lines to enable the interactive table app
 
-query_df = pd.read_csv(st.session_state['uploaded_file'])
-#uncomment the following lines to enable the interactive table app
+    st.subheader('Interactive Table')
+    st.write(
+    "This is a simple table app that uses the Keboola Storage API to get the data from the selected table."
+    )
+    st_aggrid.interactive_table()
 
-st.subheader('Interactive Table')
-st.write(
-"This is a simple table app that uses the Keboola Storage API to get the data from the selected table."
-)
-st_aggrid.interactive_table()
+    st.markdown('''
+    ---
+    ''')
+    st.subheader('Prophet Forecasting')
+    st.markdown('''
+    This app allows you to generate forecasts using the Prophet library.
+    ---
+    ''')
+    st_prophet_forecast.forecast(query_df)
 
-st.markdown('''
----
-''')
-st.subheader('Prophet Forecasting')
-st.markdown('''
-This app allows you to generate forecasts using the Prophet library.
----
-''')
-st_prophet_forecast.forecast(query_df)
-
-
-if st.button('Generate Queries'):
-    st.subheader('Generate Queries')
-    codex.codex()
+    #upload_to_keboola()

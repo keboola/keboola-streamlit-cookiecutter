@@ -30,3 +30,10 @@ src/keboola_storage_api/__pycache__/table_selection.cpython-310.pyc
 src/st_aggrid/__pycache__/st_aggrid.cpython-310.pyc
 src/workspace_connection/__pycache__/workspace_connection.cpython-310.pyc
 analytics-data
+data/kbc_branch
+data/kbc_job
+data/kbc_usage_metrics_values
+data/sales_forecast
+src/keboola_storage_api/__pycache__/connection.cpython-310.pyc
+src/keboola_storage_api/__pycache__/upload.cpython-310.pyc
+src/codex_query_generator/__pycache__/codex.cpython-310.pyc
