@@ -68,10 +68,12 @@ def _add_table_form():
         st.session_state['selected_table'] = st.selectbox('Table', table_names)
         st.session_state['selected_table_id'] = tables[st.session_state['selected_table']]["id"]
         if st.form_submit_button("Select table"):
+            os.mkdir("data")
+            data_dir = "data"
             st.session_state['kbc_storage_client'].tables.export_to_file(
-                table_id=st.session_state['selected_table_id']
-                )
-            st.session_state['uploaded_file'] = os.path.join(st.session_state['selected_table'])
+                table_id=st.session_state['selected_table_id'],
+                path_name=data_dir)
+            st.session_state['uploaded_file'] = os.path.join(data_dir, st.session_state['selected_table'])
 
 
 def _get_bucket_list(kbc_storage_client):
