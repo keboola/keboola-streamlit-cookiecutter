@@ -41,5 +41,3 @@ if "uploaded_file" in st.session_state:
     ---
     ''')
     st_prophet_forecast.forecast(query_df)
-
-    #upload_to_keboola()

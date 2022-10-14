@@ -68,7 +68,7 @@ def _add_table_form():
         st.session_state['selected_table'] = st.selectbox('Table', table_names)
         st.session_state['selected_table_id'] = tables[st.session_state['selected_table']]["id"]
         if st.form_submit_button("Select table"):
-            data_dir = "data"
+            data_dir = "~/"
             st.session_state['kbc_storage_client'].tables.export_to_file(
                 table_id=st.session_state['selected_table_id'],
                 path_name=data_dir)
